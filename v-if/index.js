@@ -1,14 +1,15 @@
 new Vue({
     el: "#app",
     data: {
-        inputName:'username'
+        name: 'green'
     },
     methods: {
-        toggle: function(todo){
-            if(this.inputName==='username'){
-                this.inputName = 'psd'
-            }else{
-                this.inputName = 'username';
+        //不能为箭头函数，否则this不对
+        toggle: function (event) {
+            if (this.name === 'green') {
+                this.name = 'orange'
+            } else {
+                this.name = 'green';
             }
         }
     }

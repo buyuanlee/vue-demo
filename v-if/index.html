@@ -11,12 +11,12 @@
 <body>
 <div id="app">
     <template v-if="name==='green'">
-        用户名: <input type="text" placeholder="请输入用户名" key="name-input">
+        <div class="green"></div>
     </template>
     <template v-else>
-        密码: <input type="text" placeholder="请输入密码" key="psd-input">
+        <div class="orange"></div>
     </template>
-    <button @click="toggle">点击切换类型</button>
+    <button @click="toggle">变色</button>
 </div>
 
 <script src="https://cdn.bootcss.com/vue/2.5.17/vue.js"></script>
