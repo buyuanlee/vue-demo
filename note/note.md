@@ -63,5 +63,32 @@ el挂载到实例上后调用，一般我们的第一个业务逻辑会在这里
 
 文本插值不能书写表达式(语句和控制流)，支持单个表达式（注var a = x为多行表达式，因为var a;a = 6）
 
-
-
+### 过滤器
+#### 使用方法
+Vue支持在{{ }} 插值的尾部添加小管道符"|"进行过滤，经常用于格式化文本，比如字母全部答谢，货币千位使用逗号分隔等，过滤的规则是自定义的，通过给Vue实例添加选项`filters`来设置。
+#### 过滤器的写法
+1. 过滤器+过滤器的名字
+```html
+{{data | filterData}}
+```
+2. 过滤器的串联
+```html
+{{data | filter1 |filter2 |filter3}}
+```
+3. 过滤器的参数
+```html
+{{data | filterData(arg1,arg2)}
+```
+注意此处的`arg1`和`arg2`对应的值分别是`filterData`里面的第二个和第三个参数
+```javascript
+var app = new Vue({
+    el:'#el',
+    data:{},
+    filters:{
+        filterData:function(value,a,b){
+            
+        }
+    }
+})
+```
+此处，对应的就是`a`与`b`
