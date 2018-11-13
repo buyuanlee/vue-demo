@@ -104,3 +104,6 @@ var app = new Vue({
 3. `v-bind`动态更新html上面的属性，如id、class等
 4. `v-on`用来绑定事件监听器
 
+### 语法糖
+`v-bind`-----`:`
+`v-on`----`@`
