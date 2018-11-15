@@ -149,5 +149,29 @@ key代表style的属性值，value代表对应的值
 #### v-if v-else-f v-else
 1. 后面接的是等号，等号后的内容必须是布尔值
 2. v-if的弊端：为了节约资源，会进行复用；解决方法：加key值
+#### v-show
+显现与否取决于布尔值
+#### v-if与v-show的比较
+1. v-if实时渲染：页面显示则渲染，不显示，则移除
+2. v-show不管先不显示都会在DOM中。只是改变了display的属性
+3. 结论：需要经常切换页面v-show，需要实时观察的话就用v-if
+
+### 列表渲染v-for
+#### 当需要将一个数组遍历或者枚举一个对象属性的时候循环显示时
+#### v-for 一定是写在要遍历的元素上
+#### 遍历多个对象（数组）
+1. 普通写法
+```html
+<ul>
+    <li v-for="item in items">{{itme.name}}</li>
+</ul>
+```
+2. 获取索引
+```html
+<ul>
+    <li v-for="（item,index) in items">{{index}}-{{itme.name}}</li>
+</ul>
+```
+#### 遍历一个对象的多个属性
 
 
