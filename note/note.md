@@ -291,3 +291,17 @@ VueJS提供的
         }
     })
 ```
+#### 使用props传递数据 父组件向子组件传递数据
+- 在组件中使用props来从父组件中接收参数，在props中定义的属性，都可以在组件中直接使用
+- **props中的数据来自父组件，data中return的数组是自身的数据。2种情况作用域都是组件本身，可以在template、methods、computed中直接使用**
+- props的值有两种，一种是字符串数组，一种是对象
+- v-bind动态绑定来自父组件的数据
+```html
+<son-component v-bind:sondata="parentdata"></son-component>
+```
+#### 是否使用v-bind传递数据的区别
+```html
+<child-component msg="[3,6,9]">
+<child-component :msg="[3,6,9]">
+```
+第一个是字符串，第二个是数组
