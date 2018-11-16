@@ -305,3 +305,66 @@ VueJS提供的
 <child-component :msg="[3,6,9]">
 ```
 第一个是字符串，第二个是数组
+#### 单向数据流
+##### 概念：props传递数据是单向的，父组件数据变化时会传递给子组件，反向不行
+##### 目的：父子组件解耦，避免子组件影响父组件
+##### 应用场景              
+1. 父组件传递初始值进来，子组件将它作为初始值保存起来，在自己的作用域下可以随意使用和修改，这种情况可以在组件data内再声明一个数据，引用父组件的prop
+    -  注册组件
+    - 将父组件的数据传递进来，并在子组件中用props接收
+    - 将传递进来的数据通过初始值保存起来
+```html
+<div id="app">
+    <my-component init-count="Vue"></my-component>
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {}
+        components: {
+            'my-component': {
+                props: ['init-count'],
+                template: `<div>{{init-count}}</div>`,
+                data: function () {
+                    return {
+                        count: this.initCount
+                    }
+                }
+            }
+        }
+    })
+```
+2. props作为需要被转变的原始值传入，这种情况用计算属性就可以了
+    - 注册组件
+    - 将父组件的数据传递进来，并在子组件中用props接收
+    - 将传递进来的数据通过计算属性进行重新计算
+```html
+<div id="app">
+    <input type="text" v-model="width">
+    <my-component :width="width" msg="请输入宽度"></my-component>
+</div>
+
+<script src="https://cdn.bootcss.com/vue/2.5.17/vue.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            width: '',
+        },
+        components: {
+            'my-component': {
+                props: ['msg', 'width'],
+                template: `<div :style="style">{{msg}}</div>`,
+                computed: {
+                    style: function () {
+                        return {
+                            width: this.width + 'px',
+                            background: 'green'
+                        }
+                    }
+                }
+            }
+        }
+    })
+</script>    
+```
