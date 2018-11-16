@@ -271,3 +271,23 @@ VueJS提供的
     <tbody is="my-compontent></tbody>"
 </table>
 ```
+#### 使用的注意事项
+- 命名必须使用小写字母/短横杠（不可以用驼峰）
+- template中内容必须被一个DOM元素包裹
+- 在组件定义中，除了template之外还可以使用其他选项-data、computed、methods（data必须是一个方法）
+```javascript
+    new Vue({
+        el: '#app',
+        data: {},
+        components: {
+            'app-component': {
+                template: `<div>我是一个局部组件</div>`,
+                data:function(){
+                    return {
+                     
+                    }
+                }
+            }
+        }
+    })
+```
