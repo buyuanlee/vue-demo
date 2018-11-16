@@ -243,3 +243,31 @@ VueJS提供的
 - number
 - trim  
 
+### 组件
+#### 组件的使用方法
+1. 全局注册
+    - 优点：所有的Vue实例都可以用
+    - 缺点：权限太大，容错率降低
+```javascript
+    Vue.component(tag,{
+        template:'<div>我是一个全局组件</div>'
+    })
+```
+2. 局部注册
+在table中受到限制是，利用is属性
+```javascript
+    new Vue({
+        el: '#app',
+        data: {},
+        components: {
+            'app-component': {
+                template: `<div>我是一个局部组件</div>`
+            }
+        }
+    })
+```
+```html
+<table>
+    <tbody is="my-compontent></tbody>"
+</table>
+```
