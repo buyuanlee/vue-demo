@@ -413,3 +413,81 @@ Vue.component('my-component', {
   }
 })
 ```
+
+### 组件通信
+- 父子组件通信
+- 兄弟组件通信
+- 跨级组件通信
+#### 自定义事件-子组件给父组件传递数据
+使用v-on除了监听DOM事件外，还可以用于组件之间的自定义事件。      
+JavaScript的设计模式——观察者模式，`dispatchEvent`和`addEventListener`。       
+Vue中，子组件用`$emit()`来触发事件，父组件用`$on()` 来监听子组件的事件。
+- 自定义事件
+- 在子组件中用`$emit`触发事件，第一个参数是事件名，后边的参数是要传递的数据
+-  在自定义事件中用一个参数来接受
+#### 在组件中使用v-model
+```javascript
+Vue.component('base-checkbox', {
+  model: {
+    prop: 'checked',
+    event: 'change'
+  },
+  props: {
+    checked: Boolean
+  },
+  template: `
+    <input
+      type="checkbox"
+      v-bind:checked="checked"
+      v-on:change="$emit('change', $event.target.checked)"
+    >
+  `
+})
+```
+- 绑定了一个value属性
+- 在有新的value时触发input事件
+#### 非父组件中的通信
+```html
+<div id="app">
+    <first-component></first-component>
+    <second-component></second-component>
+</div>
+
+<script src="https://cdn.bootcss.com/vue/2.5.17/vue.js"></script>
+<script>
+    Vue.component('first-component', {
+        template: `<div><button @click="handle">点我向b组件传递数据</button></div>`,
+        data: function () {
+            return {
+                aaa: '我是来自A组件的内容'
+            }
+        },
+        methods: {
+            handle: function () {
+                this.$root.bus.$emit('haha', this.aaa)
+            }
+        }
+    })
+    Vue.component('second-component', {
+        template: `<div>我是一个组件</div>`,
+        created: function () {
+            this.$root.bus.$on('haha', function (value) {
+                alert(value)
+            })
+        }
+    })
+    new Vue({
+        el: '#app',
+        data: {
+            bus: new Vue()
+        }
+    })
+</script>
+```
+#### 父链
+`this.$parent`
+#### 子链(利用索引)
+```html
+<my-component ref='xxx'>
+```
+`this.$refs.xxx`
