@@ -594,3 +594,12 @@ Vue.component('base-checkbox', {
     })
 </script>
 ```
+#### 访问slot
+类似于子链的索引
+`this.$slots.(NAME)`
+```javascript
+mounted:function(){}
+    var slots = this.$sloters.slotName
+    var text = slots[0].elm.innerText
+    var html = slots[0].elm.innerHTML
+```
