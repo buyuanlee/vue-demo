@@ -498,3 +498,70 @@ Vue.component('base-checkbox', {
 #### 编译的作用域
 父组件模版的内容在父组件的作用域中编译      
 子组件模版的内容在子组件的作用域中编译
+#### 插槽的用法 
+混合父子组件的内容，弥补视图不足
+1. 单个插槽
+    ```html
+    <div id="app">
+        <my-component>
+            <p>我是父组件的内容（会显示）</p>
+        </my-component>
+    </div>
+    
+    <script>
+        Vue.component('my-component', {
+            template: `
+                <div>
+                    <slot>
+                    我是插槽的内容（不会显示）
+                    </slot>
+                </div>`,
+            data: function () {
+                return {}
+            }
+        })
+    
+        new Vue({
+            el: '#app',
+            data: {}
+        })
+    </script>
+    ```
+2. 具名插槽
+如果不指定name，则渲染无slot name的内容
+
+    ```html
+    <div id="app">
+        <my-component>
+            <h2 slot="header">我是标题</h2>
+            <p>我是内容</p>
+            <p slot="footer">我是底部信息</p>
+        </my-component>
+    </div>
+    
+    <script>
+        Vue.component('my-component', {
+            template: `
+                <div>
+                    <div>
+                        <slot name="header"></slot>
+                    </div>
+                    <div>
+                        <slot></slot>
+                    </div>
+                    <div>
+                        <slot name="footer"></slot>
+                    </div>
+    
+                </div>`,
+            data: function () {
+                return {}
+            }
+        })
+    
+        new Vue({
+            el: '#app',
+            data: {}
+        })
+    </script>
+    ```
