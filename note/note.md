@@ -565,3 +565,32 @@ Vue.component('base-checkbox', {
         })
     </script>
     ```
+#### 作用域插槽：从子组件中获取数据
+```html
+<div id="app">
+    <my-component>
+        <template slot="abc" slot-scope="prop">
+            {{prop.text}}
+        </template>
+    </my-component>
+</div>
+
+<script>
+    Vue.component('my-component', {
+        template: `
+            <div>
+                <div>
+                    <slot text="我是来自子组件的内容" name="abc"></slot>
+                </div>
+            </div>`,
+        data: function () {
+            return {}
+        }
+    })
+
+    new Vue({
+        el: '#app',
+        data: {}
+    })
+</script>
+```
