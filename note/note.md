@@ -368,8 +368,48 @@ VueJS提供的
     })
 </script>    
 ```
-### 数据验证
+### 关于命名方式
 #### vue组件中的驼峰命名和短横线命名
 ##### 在html中，不区分大小写，例如myMsg和mysmg是一致的。因此在组件中的html中使用必须使用短横线命名方式。
 ##### 在组件中，父组件给子组件传递数据必须使用短横线命名。在`template`中，必须使用驼峰命名。
 ##### 在组件的`data`中，引用this.XXX只能是驼峰命名
+
+### 数据验证
+- type:类型
+- defult：默认值
+- required：是否必填
+```javascript
+Vue.component('my-component', {
+  props: {
+    // 基础的类型检查 (`null` 匹配任何类型)
+    propA: Number,
+    // 多个可能的类型
+    propB: [String, Number],
+    // 必填的字符串
+    propC: {
+      type: String,
+      required: true
+    },
+    // 带有默认值的数字
+    propD: {
+      type: Number,
+      default: 100
+    },
+    // 带有默认值的对象
+    propE: {
+      type: Object,
+      // 对象或数组默认值必须从一个工厂函数获取
+      default: function () {
+        return { message: 'hello' }
+      }
+    },
+    // 自定义验证函数
+    propF: {
+      validator: function (value) {
+        // 这个值必须匹配下列字符串中的一个
+        return ['success', 'warning', 'danger'].indexOf(value) !== -1
+      }
+    }
+  }
+})
+```
