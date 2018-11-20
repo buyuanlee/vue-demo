@@ -1,11 +1,12 @@
 ## render函数
 template下只允许一个子节点
+**在render函数的方法中，第一个参数必须是`createElement`**
 ### render函数的第一个参数
-**在render函数的方法中，第一个参数必须是`createElement`。
-`createElement()`的第一个参数必选.**
-- string:html标签
-- object：一个含有数据选项的对象
-- function:返回一个含有数据选项的对象
+1. 第一个参数必选.
+2. 可选类型
+    - string:html标签
+    - object：一个含有数据选项的对象
+    - function:返回一个含有数据选项的对象
 ```javascript
     Vue.component('child', {
         props: ['level'],
@@ -27,11 +28,12 @@ template下只允许一个子节点
     })
 ```
 ### render函数的第二个参数
-**第二个参数可选，第二个参数是数据对象。只能是object**
-- class
-- style
-- attrs
-- domProps
+1. 第二个参数可选
+2. 第二个参数是数据对象。只能是object
+    - class
+    - style
+    - attrs
+    - domProps
 ```javascript
     Vue.component('child', {
         props: ['level'],
@@ -56,6 +58,21 @@ template下只允许一个子节点
                     innerHTML: '<span style="color:blue;font-size:24px">江心比心</span>'
                 }
             })
+        }
+    })
+```
+### render函数的第三个参数-代表子节点
+1. 第三个参数可选
+2. String|Array
+```javascript
+    Vue.component('child', {
+        props: ['level'],
+        render: function (createElement) {
+            return createElement('div', [
+                createElement('h1', '我是大标题'),
+                createElement('h2', '我是二标题'),
+                createElement('h3', '我是三标题')
+            ])
         }
     })
 ```
