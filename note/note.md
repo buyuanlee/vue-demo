@@ -453,7 +453,6 @@ Vue.component('base-checkbox', {
     <second-component></second-component>
 </div>
 
-<script src="https://cdn.bootcss.com/vue/2.5.17/vue.js"></script>
 <script>
     Vue.component('first-component', {
         template: `<div><button @click="handle">点我向b组件传递数据</button></div>`,
@@ -598,8 +597,75 @@ Vue.component('base-checkbox', {
 类似于子链的索引
 `this.$slots.(NAME)`
 ```javascript
-mounted:function(){}
-    var slots = this.$sloters.slotName
-    var text = slots[0].elm.innerText
-    var html = slots[0].elm.innerHTML
+    new Vue({
+        el: '#app',
+        data: {},
+        mounted:function(){
+            var header = this.$slots.header;
+            var text = header[0].elm.innerText;
+            var html = header[0].elm.innerHTML;
+        }
+    })
 ```
+#### 组件的高级用法-动态组件
+```html
+<div id="app">
+    <component :is="thisView"></component>
+    <button @click="handView('A')">第一句</button>
+    <button @click="handView('B')">第二句</button>
+    <button @click="handView('C')">第三句</button>
+    <button @click="handView('D')">第四句</button>
+</div>
+
+<script>
+    Vue.component('compA', {
+        template: `
+            <p>空山不见人</p>`
+    })
+    Vue.component('compB', {
+        template: `
+            <p>但闻人语响</p>`
+    })
+    Vue.component('compC', {
+        template: `
+            <p>返景入深林</p>`
+    })
+    Vue.component('compD', {
+        template: `
+            <p>复照青苔上</p>`
+    })
+
+    new Vue({
+        el: '#app',
+        data: {thisView: 'compA'},
+        methods: {
+            handView: function (tag) {
+                this.thisView = 'comp' + tag
+            }
+        }
+    })
+</script>
+```
+
+### 自定义指令
+#### 自定义指令的基本用法
+类似于组件的全局注册和局部注册，区别就是把component换成了directive
+#### 钩子函数
+- bind：只调用一次，指令第一次绑定到元素时调用，用这个钩子函数可以定义一个在绑定时执行一次的初始化动作
+- inserted：被绑定元素插入父节点时调用（父节点存在即可调用，不必存在于document中）。
+- update：被绑定元素所在的模版更新时调用，而不论绑定值是否变化。通过比较更新前后的绑定值，可以忽略不必要的模版更新
+- componentUpdated：被绑定元素所在的模版完成一次更新周期时调用
+- unbind：只调用一次，指令与元素解绑时调用
+#### 钩子函数的参数
+- el：指令所绑定的元素，可以用来直接操作DOM
+- binding：一个对象，可以包含一下属性
+    * name：指令名，不包括 `v-`前缀。
+    * value：指令的绑定值。例如：`v-my-directive='1+1'`。`value`的值是`2`。
+    * oldvalue:指令绑定的前一个值，仅在update和componentUpdated钩子中可用。无论值是否改变都可用。
+    * expression：绑定值的字符串形式。例如`v-my-directive='1+1'`,expression的值是`'1+1'`。
+    * arg:传给指令的参数。例如`v-my-directive:foo`，`arg`的值是`foo`。
+    * modifiers：一个包含修饰符的对象。例如：`v-my-directive.foo.bar`,修饰符对象`modifiers`
+    的值是`{foo:true,bar:true}`。
+- vnode:Vue编译生成的虚拟节点。
+- oldVnode：上一个虚拟节点，仅在update和componentUpdated钩子中可以使用。
+       
