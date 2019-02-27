@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<div id="app">
+    <my-component value="vue">
+    </my-component>
+</div>
+
+<script src="https://cdn.bootcss.com/vue/2.5.17/vue.js"></script>
+<script>
+    Vue.component('my-component', {
+        props: ['value'],
+        functional: true,
+        //由于无this，通过context获取传递过来的数据
+        render: function (createElement, context) {
+            return createElement('button', {
+                on: {
+                    click: function () {
+                        console.log(context)
+                        console.log(context.parent)
+                        console.log(context.props.value)
+                    }
+                }
+            }, '点击了解')
+        }
+    })
+    var app = new Vue({
+        el: '#app',
+        data: {},
+        methods: {}
+    })
+</script>
+</body>
+</html>
